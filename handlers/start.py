@@ -24,4 +24,4 @@ async def start_handler(message):
 @start_router.callback_query(F.data == "about_us")
 async def about_us_handler(callback: types.CallbackQuery):
     text = "Текст о нашем магазине"
-    await callback.message.answer(text)
+    await (callback.message.answer(text))
