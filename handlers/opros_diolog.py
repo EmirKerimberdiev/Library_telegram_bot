@@ -36,7 +36,15 @@ async def opros_name(message: types.Message, state: FSMContext):
 
 @opros_router.message(Opros.age)
 async def opros_age(message: types.Message, state: FSMContext):
-    await state.update_data(age=message.text)
+    age = message.text
+    if not age.isdigit():
+        await message.answer("Введите число!")
+        return
+    age = int(age)
+    if age < 12 or age > 90:
+        await message.ansver("Допустимый возпаст от 12 до 90 лет!")
+        return
+    await state.update_data(age=age)
     await state.set_state(Opros.gender)
     kb = types.ReplyKeyboardMarkup(
         keyboard=[
@@ -52,6 +60,10 @@ async def opros_age(message: types.Message, state: FSMContext):
 
 @opros_router.message(Opros.gender)
 async def opros_gender(message: types.Message, state: FSMContext):
+    gender = message.text
+    if gender not in ["Мужской", "Женский"]:
+        await message.answer("Выберите вариант из списка!")
+        return
     kb = types.ReplyKeyboardRemove()
     await state.update_data(gender=message.text)
     await state.set_state(Opros.genre)
