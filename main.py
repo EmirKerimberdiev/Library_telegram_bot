@@ -1,11 +1,16 @@
 import asyncio
 import logging
+from aiogram import Bot
 
-from bot_config import bot, dp
+from bot_config import bot, dp, database
 from handlers.start import start_router
 from handlers.picture import pic_router
 from handlers.opros_diolog import opros_router
 from handlers.other_messages import echo_router
+
+
+async def on_startup(bot: Bot):
+    await database.create_tables()
 
 
 async def main():

@@ -1,8 +1,8 @@
-from aiogram import Router, types
-from aiogram.filters.command import Command
+from aiogram import Router
 
 
 echo_router = Router()
+
 
 @echo_router.message()
 async def echo_handler(message):

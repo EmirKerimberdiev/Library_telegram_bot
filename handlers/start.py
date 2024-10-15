@@ -4,6 +4,7 @@ from aiogram.filters.command import Command
 
 start_router = Router()
 
+
 @start_router.message(Command(commands=['start']))
 async def start_handler(message):
     name = message.from_user.first_name
@@ -21,6 +22,8 @@ async def start_handler(message):
     )
 
     await message.answer(f"Добро {name} пожаловать на бот Backend_bot этот бот был создан для книгалюбов", reply_markup=keyboard)
+
+
 @start_router.callback_query(F.data == "about_us")
 async def about_us_handler(callback: types.CallbackQuery):
     text = "Текст о нашем магазине"
