@@ -1,6 +1,5 @@
 from aiogram import Router
 
-
 echo_router = Router()
 
 

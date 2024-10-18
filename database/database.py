@@ -1,12 +1,12 @@
 import sqlite3
 
 
-# connection = sqlite3.connect("db.sqlite")
+# connection = sqlite3.connect('db.sqlite')
 class Database:
-    def __init__(self, path):
+    def __init__(self, path: str):
         self.path = path
 
-    def create_table(self):
+    def create_tables(self):
         with sqlite3.connect(self.path) as connection:
             connection.execute("""
                 CREATE TABLE IF NOT EXISTS survey_results (
@@ -20,7 +20,3 @@ class Database:
             """)
 
             connection.commit()
-
-
-database = Database("db.sqlite")
-database.create_table()

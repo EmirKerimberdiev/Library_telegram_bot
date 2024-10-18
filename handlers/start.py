@@ -1,30 +1,47 @@
-from aiogram import Router, types, F
+from aiogram import Router, F, types
+# from aiogram.types import Message, InlineKeyboardMarkup
 from aiogram.filters.command import Command
-
 
 start_router = Router()
 
 
-@start_router.message(Command(commands=['start']))
-async def start_handler(message):
+@start_router.message(Command("start"))
+async def start_handler(message: types.Message):
     name = message.from_user.first_name
-
-    keyboard = types.InlineKeyboardMarkup(
+    # await message.answer(f"Привет, {name}!")
+    # await bot.send_message(
+    #     chat_id=message.chat.id,
+    #     text=f"Привет, {name}!"
+    # )
+    kb = types.InlineKeyboardMarkup(
         inline_keyboard=[
             [
-                types.InlineKeyboardButton(text="Наш сайт", url="https://geeks.kg"),
-                types.InlineKeyboardButton(text="Наш инстаграм", url="https://instagram.com/geekskg")
+                types.InlineKeyboardButton(
+                    text="Наш сайт",
+                    url="https://geeks.kg"
+                ),
+                types.InlineKeyboardButton(
+                    text="Наш инстаграм",
+                    url="https://instagram.com/geekskg"
+                )
             ],
             [
-                types.InlineKeyboardButton(text="О нас", callback_data="about_us")
+                types.InlineKeyboardButton(
+                    text="О нас",
+                    callback_data="aboutus"
+                )
             ]
         ]
     )
+    await message.reply(
+        f"Привет, {name}. Добро пожаловать в наш бот для книголюбов",
+        reply_markup=kb
+    )
 
-    await message.answer(f"Добро {name} пожаловать на бот Backend_bot этот бот был создан для книгалюбов", reply_markup=keyboard)
 
-
-@start_router.callback_query(F.data == "about_us")
+# @start_router.callback_query(lambda cb: cb.data == "aboutus")
+@start_router.callback_query(F.data == "aboutus")
 async def about_us_handler(callback: types.CallbackQuery):
     text = "Текст о нашем магазине"
-    await (callback.message.answer(text))
+    # await callback.answer(text)
+    await callback.message.answer(text)
